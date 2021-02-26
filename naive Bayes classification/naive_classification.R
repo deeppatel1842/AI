@@ -1,10 +1,20 @@
 
 
+library(bnclassify)
+library(dplyr)
+library(bnlearn)
+library(graph3d)
+
+
 studata<-read.table("2020_bn_nb_data.txt",head=TRUE) #read data
 colnames(studata) #col. names
 
-#label
-table(studata$QP)# print QP table 
+DF<-studata
+studata<-lapply(DF,as.factor)
+studata<-data.frame(studata)
+colnames(studata)
+nb.student<-nb(class = "QP",dataset = studata)
+plot(nb.grades)
 
 #split Train and Test
 set.seed(20) # random no
@@ -15,7 +25,7 @@ test<-studata[id==2,]#test data
 nrow(train)
 nrow(test)
 
-#naive bayes
+#naive bays
 
 library(e1071)
 library(caret)
@@ -24,6 +34,8 @@ library(rminer)
 student_nb<-naiveBayes(QP ~ ., data=train)# Applying naviebayes
 student_nb
 
-pred<-studata.predict(student_nb,test) # predict test data
-mmetric(test$QP,pred,c("ACC","PRECISION","TPR","F1")) # accuracy
+pred<-predict(student_nb,test) # predict test data
+str(pred)
+
+confusionMatrix(table(predicted=pred,true=test$QP))
 
