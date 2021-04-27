@@ -1,0 +1,52 @@
+[System]
+Name='washingfuzzy'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=12
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='sum'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Load_Volume'
+Range=[0 100]
+NumMFs=3
+MF1='FL':'trimf',[-41.67 0 41.67]
+MF2='ML':'trapmf',[12.5 45.83 54.17 87.5]
+MF3='LL':'trimf',[58.33 100 141.7]
+
+[Input2]
+Name='Load_Dirtiness'
+Range=[0 100]
+NumMFs=4
+MF1='VD':'trapmf',[-37.5 -4.167 4.167 37.5]
+MF2='MD':'trapmf',[16.44 41.87 58.13 83.56]
+MF3='LD':'trimf',[58.33 100 141.7]
+MF4='ND':'trimf',[4.995 50 95.01]
+
+[Output1]
+Name='Time_taken'
+Range=[0 100]
+NumMFs=4
+MF1='Vlot':'trimf',[-41.67 0 41.67]
+MF2='lot':'trapmf',[12.5 45.83 54.17 87.5]
+MF3='Mt':'gbellmf',[20.83 2.5 100]
+MF4='lit':'gaussmf',[21.23 60]
+
+[Rules]
+1 1, 1 (1) : 1
+1 2, 1 (1) : 1
+1 3, 2 (1) : 1
+1 4, 4 (1) : 1
+2 1, 1 (1) : 1
+2 2, 3 (1) : 1
+2 3, 3 (1) : 1
+2 4, 4 (1) : 1
+3 1, 2 (1) : 1
+3 2, 2 (1) : 1
+3 3, 4 (1) : 1
+3 4, 4 (1) : 1
